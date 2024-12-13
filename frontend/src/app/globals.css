@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+:root {
+  --background: #172554;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer components {
+
+  /*Un componente global de boton */
+  .btn {
+    @apply bg-yellow-500 text-white text-lg font-bold py-3 px-6 rounded-lg hover:scale-110 ease-in duration-100 active:translate-y-1;
+  }
+
+  .transition-global {
+    @apply hover:scale-110 ease-in duration-100 active:translate-y-3;
+  }
+
+.stars-outer {
+  @apply relative inline-block text-gray-300 text-2xl;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
+
+.stars-outer::before {
+  content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.stars-inner {
+  @apply absolute top-0 left-0 overflow-hidden whitespace-nowrap;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #f8ce0b;
+}
+
+.stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+}
+}
