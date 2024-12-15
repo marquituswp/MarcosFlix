@@ -56,7 +56,7 @@ export default function MoviesList() {
 
     useEffect(() => {
         fetchMovies();
-    }, [favoriteChanged]);
+    }, [favoriteChanged, fetchMovies]);
 
     const handleAddToFavorites = (id, isFavorite) => {
         try {

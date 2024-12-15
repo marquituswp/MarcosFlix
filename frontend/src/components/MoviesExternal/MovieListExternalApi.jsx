@@ -129,7 +129,7 @@ export default function MovieListExternalApi() {
 
     useEffect(() => {
         fetchMovies();
-    }, []);
+    }, [fetchMovies]);
 
     return (
         <>

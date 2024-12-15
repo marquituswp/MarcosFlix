@@ -19,7 +19,7 @@ export default function MovieDetails({ movieId }) {
         } catch {
             return ("ERROR FETCHING DATA")
         }
-    }, [])
+    }, [movieId])
 
     const { token } = useAuth()
     if (!movie) {
