@@ -5,7 +5,7 @@ const handleAutoReview = async (scoring, token, movieId) => {
             scoring: scoring,
         };
         await fetch(
-            `http://localhost:3000/users/reviewMovie/${movieId}`,
+            `https://marcosflix.onrender.com/users/reviewMovie/${movieId}`,
             {
                 method: "PUT",
                 headers: {

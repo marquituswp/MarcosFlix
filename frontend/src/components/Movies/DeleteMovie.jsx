@@ -10,7 +10,7 @@ export default function DeleteMovie({ movieId }) {
     const handleClick = (event) => {
         try {
             event.preventDefault();
-            fetch(`http://localhost:3000/movie/${movieId}?hard=true`, {
+            fetch(`https://marcosflix.onrender.com/movie/${movieId}?hard=true`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`

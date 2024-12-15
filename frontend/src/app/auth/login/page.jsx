@@ -23,7 +23,7 @@ export default function Login() {
         const { email, password } = values;
 
         try {
-            const response = await fetch("http://localhost:3000/auth/login", {
+            const response = await fetch("https://marcosflix.onrender.com/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

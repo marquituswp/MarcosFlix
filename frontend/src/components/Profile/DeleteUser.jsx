@@ -12,7 +12,7 @@ export default function DeleteUser() {
     const handleClick = (event) => {
         try {
             event.preventDefault();
-            fetch(`http://localhost:3000/users/`, {
+            fetch(`https://marcosflix.onrender.com/users/`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${token}`,

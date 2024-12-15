@@ -4,7 +4,7 @@ export default function handleUploadMoviePoster(imageFile, token, movieId){
         // Crea un objeto FormData con la imagen y los textos
         const formData = new FormData();
         formData.append("image", imageFile);
-        fetch(`http://localhost:3000/movie/${movieId}`, {
+        fetch(`https://marcosflix.onrender.com/movie/${movieId}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${token}`,

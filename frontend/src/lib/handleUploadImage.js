@@ -4,7 +4,7 @@ export default function handleUploadProfilePicture(token, imageFile){
         // Crea un objeto FormData con la imagen y los textos
         const formData = new FormData();
         formData.append("image", imageFile);
-        fetch("http://localhost:3000/auth/uploadProfilePicture", {
+        fetch("https://marcosflix.onrender.com/auth/uploadProfilePicture", {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,

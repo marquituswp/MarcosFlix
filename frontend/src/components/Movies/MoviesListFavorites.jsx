@@ -30,7 +30,7 @@ export default function MoviesList() {
             // Construye la URL con los filtros como parámetros de consulta
             const queryParams = new URLSearchParams(validFilters).toString();
 
-            fetch(`http://localhost:3000/movie/favorites?${queryParams}`, {
+            fetch(`https://marcosflix.onrender.com/movie/favorites?${queryParams}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ export default function MoviesList() {
 
     const handleAddToFavorites = (id, isFavorite) => {
         try {
-            fetch(`http://localhost:3000/movie/favorite/${id}?isFavorite=${!isFavorite}`, {
+            fetch(`https://marcosflix.onrender.com/movie/favorite/${id}?isFavorite=${!isFavorite}`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token}`,

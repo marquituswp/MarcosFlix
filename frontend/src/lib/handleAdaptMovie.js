@@ -91,7 +91,7 @@ const handleAdaptMovie = async (movie, token) => {
             actors: ["No Info"],
             filmGenre: genreList,
         };
-        const response = await fetch("http://localhost:3000/movie", {
+        const response = await fetch("https://marcosflix.onrender.com/movie", {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,

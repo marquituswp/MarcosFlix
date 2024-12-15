@@ -49,7 +49,7 @@ export default function CreateMovie() {
                 actors: values.actors.split(",").map((actor) => actor.trim()),
                 filmGenre: values.filmGenre
             };
-            const response = await fetch("http://localhost:3000/movie", {
+            const response = await fetch("https://marcosflix.onrender.com/movie", {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,

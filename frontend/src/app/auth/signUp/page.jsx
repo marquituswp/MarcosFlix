@@ -34,7 +34,7 @@ export default function SignUpFormik() {
     const handleSubmit = async (values, { setSubmitting, setErrors }) => {
         try {
             const body = { ...values };
-            const response = await fetch("http://localhost:3000/auth/register", {
+            const response = await fetch("https://marcosflix.onrender.com/auth/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

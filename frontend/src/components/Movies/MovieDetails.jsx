@@ -11,7 +11,7 @@ export default function MovieDetails({ movieId }) {
     useEffect(() => {
         try {
 
-            fetch(`http://localhost:3000/movie/${movieId}`)
+            fetch(`https://marcosflix.onrender.com/movie/${movieId}`)
                 .then(response => response.ok ? response.json() : response.text())
                 .then(data => {
                     setMovie(data)

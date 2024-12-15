@@ -11,7 +11,7 @@ import { useUser } from "@/context/UserContext"; // Importar el hook useUser
 const getUserData = async (token) => {
     try {
         const { _id } = jwtDecode(token);
-        const response = await fetch(`http://localhost:3000/users/`);
+        const response = await fetch(`https://marcosflix.onrender.com/users/`);
         if (!response.ok) throw new Error("Error fetching users");
         const users = await response.json();
         const user = users.find((user) => user._id === _id);

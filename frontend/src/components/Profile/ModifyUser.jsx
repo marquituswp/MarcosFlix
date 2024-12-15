@@ -40,7 +40,7 @@ export default function ModifyUser() {
             } else {
                 delete body.password;
             }
-            fetch(`http://localhost:3000/users`, {
+            fetch(`https://marcosflix.onrender.com/users`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token}`,
