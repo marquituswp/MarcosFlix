@@ -101,7 +101,7 @@ export default function MoviesList() {
                         <Form
                             onSubmit={handleSubmit}
                             onChange={handleSubmit}
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 w-1/2 max-w-6xl"
+                            className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-6 w-fit mx-8 max-w-6xl"
                         >
                             <div className="flex flex-col items-center">
                                 <label className="text-yellow-400 font-semibold text-sm">Title</label>
@@ -146,18 +146,19 @@ export default function MoviesList() {
                                     ))}
                                 </Field>
                             </div>
-                            <div className="flex flex-col items-center">
-                                <label className="text-yellow-400 font-semibold text-sm">Min Scoring</label>
-                                <StarRating
-                                    value={values.minScoring}
-                                    onChange={(value) => {
-                                        setFieldValue("minScoring", value);
-                                        handleSubmit();
-                                    }}
-                                />
-                            </div>
+                            <div className="flex flex-col items-center col-span-2">
+                                    <label className="text-yellow-400 font-semibold text-sm">Min Scoring</label>
+                                    <StarRating
+                                        value={values.minScoring}
+                                        onChange={(value) => {
+                                            setFieldValue("minScoring", value);
+                                            handleSubmit();
+                                        }}
+                                    />
+                                </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 col-span-full justify-center w-full">
                                 {/* Order by Scoring */}
+                                
                                 <button
                                     type="submit"
                                     onClick={() => {

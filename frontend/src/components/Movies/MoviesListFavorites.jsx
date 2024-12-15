@@ -104,7 +104,7 @@ export default function MoviesList() {
                         <Form
                             onSubmit={handleSubmit}
                             onChange={handleSubmit}
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 w-1/2 max-w-6xl"
+                            className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-6 w-fit mx-8 max-w-6xl"
                         >
                             <div className="flex flex-col items-center">
                                 <label className="text-yellow-400 font-semibold text-sm">Title</label>
@@ -149,7 +149,7 @@ export default function MoviesList() {
                                     ))}
                                 </Field>
                             </div>
-                            <div className="flex flex-col items-center">
+                            <div className="flex flex-col items-center col-span-2">
                                 <label className="text-yellow-400 font-semibold text-sm">Min Scoring</label>
                                 <StarRating
                                     value={values.minScoring}
@@ -159,29 +159,35 @@ export default function MoviesList() {
                                     }}
                                 />
                             </div>
-                            <div className="flex gap-2 col-span-full justify-center">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 col-span-full justify-center w-full">
+                                {/* Order by Scoring */}
+
                                 <button
                                     type="submit"
                                     onClick={() => {
-                                        setIsOrderedByScoring(true)
-                                        handleSubmit()
+                                        setIsOrderedByScoring(true);
+                                        handleSubmit();
                                     }}
                                     disabled={isOrderedByScoring}
-                                    className={"btn rounded-lg p-2 disabled:bg-gray-500"}
+                                    className="btn rounded-lg p-3 disabled:bg-gray-500 w-full"
                                 >
                                     Order by Scoring
                                 </button>
+
+                                {/* Order by Most Recent */}
                                 <button
                                     type="submit"
                                     onClick={() => {
-                                        setIsOrderedByScoring(false)
-                                        handleSubmit()
+                                        setIsOrderedByScoring(false);
+                                        handleSubmit();
                                     }}
                                     disabled={!isOrderedByScoring}
-                                    className={"btn rounded-lg p-2 disabled:bg-gray-500"}
+                                    className="btn rounded-lg p-3 disabled:bg-gray-500 w-full"
                                 >
                                     Order by Most Recent
                                 </button>
+
+                                {/* Clear Filters */}
                                 <button
                                     type="button"
                                     onClick={() => {
@@ -189,11 +195,12 @@ export default function MoviesList() {
                                         setIsOrderedByScoring(false);
                                         fetchMovies();
                                     }}
-                                    className="btn bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded-md"
+                                    className="btn bg-red-500 hover:bg-red-600 w-full"
                                 >
                                     Clear Filters
                                 </button>
                             </div>
+
                         </Form>
                     )}
                 </Formik>
