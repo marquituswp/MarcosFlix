@@ -100,8 +100,8 @@ export default function ModifyUser() {
                             }}
                         >
                             {/* Nombre */}
-                            <div className="flex flex-col sm:flex-row items-center w-full">
-                                <label className="text-yellow-400 font-semibold sm:w-1/4 mb-2 sm:mb-0">Name</label>
+                            <div className="flex flex-col sm:flex-row w-full">
+                                <label className="text-yellow-400 font-semibold ml-3 sm:w-1/4 mb-2 sm:mb-0">Name</label>
                                 <Field
                                     type="text"
                                     name="name"
@@ -116,8 +116,8 @@ export default function ModifyUser() {
                             />
 
                             {/* Apellido */}
-                            <div className="flex flex-col sm:flex-row items-center w-full">
-                                <label className="text-yellow-400 font-semibold sm:w-1/4 mb-2 sm:mb-0">Last Name</label>
+                            <div className="flex flex-col sm:flex-row w-full">
+                                <label className="text-yellow-400 font-semibold ml-3 sm:w-1/4 mb-2 sm:mb-0">Last Name</label>
                                 <Field
                                     type="text"
                                     name="lastName"
@@ -132,8 +132,8 @@ export default function ModifyUser() {
                             />
 
                             {/* Fecha de nacimiento */}
-                            <div className="flex flex-col sm:flex-row items-center w-full">
-                                <label className="text-yellow-400 font-semibold sm:w-1/4 mb-2 sm:mb-0">Date of Birth</label>
+                            <div className="flex flex-col sm:flex-row w-full">
+                                <label className="text-yellow-400 font-semibold ml-3 sm:w-1/4 mb-2 sm:mb-0">Date of Birth</label>
                                 <Field
                                     type="date"
                                     name="dateOfBirth"
@@ -148,8 +148,8 @@ export default function ModifyUser() {
                             />
 
                             {/* Correo electrónico */}
-                            <div className="flex flex-col sm:flex-row items-center w-full">
-                                <label className="text-yellow-400 font-semibold sm:w-1/4 mb-2 sm:mb-0">Email</label>
+                            <div className="flex flex-col sm:flex-row w-full">
+                                <label className="text-yellow-400 font-semibold ml-3 sm:w-1/4 mb-2 sm:mb-0">Email</label>
                                 <Field
                                     type="email"
                                     name="email"
@@ -164,8 +164,8 @@ export default function ModifyUser() {
                             />
 
                             {/* Contraseña */}
-                            <div className="flex flex-col sm:flex-row items-center w-full">
-                                <label className="text-yellow-400 font-semibold sm:w-1/4 mb-2 sm:mb-0">Password</label>
+                            <div className="flex flex-col sm:flex-row w-full">
+                                <label className="text-yellow-400 font-semibold ml-3 sm:w-1/4 mb-2 sm:mb-0">Password</label>
                                 <Field
                                     type="password"
                                     name="password"
