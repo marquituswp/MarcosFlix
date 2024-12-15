@@ -293,6 +293,7 @@ export default function MovieListExternalApi({ tokenExternal }) {
                                             if (values.page > 1) {
                                                 setFieldValue("page", values.page - 1); // Actualiza la página en Formik
                                                 handleSubmit(); // Envía los valores actualizados
+                                                window.scrollTo(0, 0)
                                             }
                                         }}
                                         disabled={values.page === 1}
@@ -310,6 +311,7 @@ export default function MovieListExternalApi({ tokenExternal }) {
                                         onClick={() => {
                                             setFieldValue("page", values.page + 1); // Actualiza la página en Formik
                                             handleSubmit(); // Envía los valores actualizados
+                                            window.scrollTo(0, 0)
                                         }}
                                         className="btn text-sm px-4 py-2 w-auto"
                                     >
