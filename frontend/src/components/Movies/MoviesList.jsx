@@ -78,7 +78,7 @@ export default function MoviesList() {
 
     return (
         <>
-            <div className="flex flex-col items-center justify-center my-8 ">
+            <div className="flex flex-col items-center justify-center my-6 ">
                 <Formik
                     initialValues={{
                         title: "",
