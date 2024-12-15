@@ -5,14 +5,14 @@ import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
 import { Formik, Form, Field } from "formik";
 import StarRating from "../StarRating";
-export default function MovieListExternalApi() {
+export default function MovieListExternalApi({tokenExternal}) {
     const { token } = useAuth();
     const [movies, setMovies] = useState(null);
     const [options, setOptions] = useState({
         method: 'GET',
         headers: {
             accept: 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_apiKeyTMDB}`
+            Authorization: `Bearer ${tokenExternal}`
         }
     });
     const [messageError, setMessageError] = useState("");
@@ -212,7 +212,7 @@ export default function MovieListExternalApi() {
 
                             <div className="my-16 mx-4 sm:mx-10 lg:mx-40">
                                 {movies && (
-                                    <ul className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-6">
+                                    <ul className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-2 gap-6">
                                         {movies.map((movie) => {
                                             const addedMovie = addedMovies.find((entry) => entry.movieId === movie.id); // Encuentra si la película ya fue añadida
 

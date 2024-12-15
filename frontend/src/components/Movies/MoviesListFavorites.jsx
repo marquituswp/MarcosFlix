@@ -201,7 +201,7 @@ export default function MoviesList() {
 
             <div className="my-16 mx-4 sm:mx-10 lg:mx-40">
                 {movies && (
-                    <ul className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-6">
+                    <ul className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-2 gap-6">
                         {movies.map((movie, index) => (
                             <li
                                 key={index}

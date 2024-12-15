@@ -156,29 +156,34 @@ export default function MoviesList() {
                                     }}
                                 />
                             </div>
-                            <div className="flex gap-2 col-span-full justify-center">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 col-span-full justify-center w-full">
+                                {/* Order by Scoring */}
                                 <button
                                     type="submit"
                                     onClick={() => {
-                                        setIsOrderedByScoring(true)
-                                        handleSubmit()
+                                        setIsOrderedByScoring(true);
+                                        handleSubmit();
                                     }}
                                     disabled={isOrderedByScoring}
-                                    className={"btn rounded-lg p-2 disabled:bg-gray-500"}
+                                    className="btn rounded-lg p-3 disabled:bg-gray-500 w-full"
                                 >
                                     Order by Scoring
                                 </button>
+
+                                {/* Order by Most Recent */}
                                 <button
                                     type="submit"
                                     onClick={() => {
-                                        setIsOrderedByScoring(false)
-                                        handleSubmit()
+                                        setIsOrderedByScoring(false);
+                                        handleSubmit();
                                     }}
                                     disabled={!isOrderedByScoring}
-                                    className={"btn rounded-lg p-2 disabled:bg-gray-500"}
+                                    className="btn rounded-lg p-3 disabled:bg-gray-500 w-full"
                                 >
                                     Order by Most Recent
                                 </button>
+
+                                {/* Clear Filters */}
                                 <button
                                     type="button"
                                     onClick={() => {
@@ -186,11 +191,12 @@ export default function MoviesList() {
                                         setIsOrderedByScoring(false);
                                         fetchMovies();
                                     }}
-                                    className="btn bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded-md"
+                                    className="btn bg-red-500 hover:bg-red-600 w-full"
                                 >
                                     Clear Filters
                                 </button>
                             </div>
+
                         </Form>
                     )}
                 </Formik>
@@ -198,7 +204,7 @@ export default function MoviesList() {
 
             <div className="my-16 mx-4 sm:mx-10 lg:mx-40">
                 {movies && (
-                    <ul className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-6">
+                    <ul className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-2 gap-6">
                         {movies.map((movie, index) => (
                             <li
                                 key={index}
