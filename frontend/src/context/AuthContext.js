@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
     // Función para hacer login
     const login = (newToken) => {
         Cookies.set("token", newToken);
+        Cookies.set('token', newToken, { expires: 7, secure: true, sameSite: 'Strict' });
         setToken(newToken);
     };
 
