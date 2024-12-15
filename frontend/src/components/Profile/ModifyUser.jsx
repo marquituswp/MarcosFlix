@@ -72,7 +72,7 @@ export default function ModifyUser() {
     };
 
     return (
-        <div className="flex flex-col items-center py-10 sm:py-20 gap-6 sm:gap-10 bg-gray-800 m-20 rounded-lg shadow-lg">
+        <div className="flex flex-col items-center py-10 sm:py-20 gap-6 sm:gap-10 bg-gray-800 rounded-lg shadow-lg">
             <h2 className="text-2xl sm:text-3xl font-bold text-yellow-400 text-center mb-8">
                 Modify your User Data
             </h2>

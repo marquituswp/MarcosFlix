@@ -46,18 +46,23 @@ export default function ProfileLayout({ children }) {
     // Si no hay usuario, mostramos un mensaje de error
     if (!user) {
         return <p className="text-center text-red-500 text-lg">User not found</p>;
+    } else {
+        console.log(user);
     }
 
     return (
         <div className="flex flex-col lg:flex-row h-auto lg:h-screen">
             {/* Sidebar */}
             <aside className="w-full lg:w-1/4 bg-blue-950 p-6 flex flex-col items-center mb-6 lg:mb-0">
-                <div className="relative w-[100px] h-[100px] mb-4">
+                {/* Contenedor con tamaño fijo y responsivo */}
+                <div className="relative w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] md:w-[200px] md:h-[200px] mb-4">
                     <Image
-                        src={user.profilePicture || "/default-profile.png"} // Imagen por defecto si no existe
+                        src={user.profilePicture || "/default-profile-pic.jpg"} // Imagen por defecto si no existe
                         alt={`${user.name}'s Profile Picture`}
                         className="rounded-full object-cover"
                         fill // Asegura que la imagen llena el contenedor
+                        objectFit="cover" // Asegura que la imagen cubra el contenedor sin distorsionar
+                        sizes="100vw"
                     />
                 </div>
                 <h2 className="text-xl font-semibold text-yellow-400 text-center">{user.name}</h2>
@@ -93,3 +98,4 @@ export default function ProfileLayout({ children }) {
         </div>
     );
 }
+

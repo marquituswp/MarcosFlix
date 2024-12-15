@@ -5,7 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
 import { Formik, Form, Field } from "formik";
 import StarRating from "../StarRating";
-export default function MovieListExternalApi({tokenExternal}) {
+export default function MovieListExternalApi({ tokenExternal }) {
     const { token } = useAuth();
     const [movies, setMovies] = useState(null);
     const [options, setOptions] = useState({
@@ -286,7 +286,7 @@ export default function MovieListExternalApi({tokenExternal}) {
                                     </div>
                                 )}
 
-                                <div className="flex justify-between items-center mt-8">
+                                <div className="flex flex-row justify-between items-center mt-8 w-full">
                                     <button
                                         type="button"
                                         onClick={() => {
@@ -296,12 +296,14 @@ export default function MovieListExternalApi({tokenExternal}) {
                                             }
                                         }}
                                         disabled={values.page === 1}
-                                        className={`btn ${values.page === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                        className={`btn ${values.page === 1 ? 'opacity-50 cursor-not-allowed' : ''} text-sm px-4 py-2 w-auto`}
                                     >
                                         Previous Page
                                     </button>
 
-                                    <span className="text-xl font-semibold text-yellow-400">Page {values.page}</span>
+                                    <span className="text-xl font-semibold text-yellow-400">
+                                        Page {values.page}
+                                    </span>
 
                                     <button
                                         type="button"
@@ -309,11 +311,12 @@ export default function MovieListExternalApi({tokenExternal}) {
                                             setFieldValue("page", values.page + 1); // Actualiza la página en Formik
                                             handleSubmit(); // Envía los valores actualizados
                                         }}
-                                        className="btn"
+                                        className="btn text-sm px-4 py-2 w-auto"
                                     >
                                         Next Page
                                     </button>
                                 </div>
+
                             </div>
                         </>
                     )}
