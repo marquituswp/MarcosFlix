@@ -48,7 +48,7 @@ export default function ModifyUser() {
                 },
                 body: JSON.stringify(body),
             })
-                .then((response) => response.ok? response.json(): response.text())
+                .then((response) => response.ok ? response.json() : response.text())
                 .then((data) => {
                     setSubmitting(false);
                     if (data.message) {
@@ -69,12 +69,13 @@ export default function ModifyUser() {
             setErrors({ general: "An error occurred while updating" });
             setSubmitting(false);
         }
-
     };
 
     return (
-        <div className="flex flex-col items-center py-20 gap-10">
-            <h2 className="text-2xl font-bold text-yellow-400">Modify your User Data</h2>
+        <div className="flex flex-col items-center py-10 sm:py-20 gap-6 sm:gap-10 bg-gray-800 m-20 rounded-lg shadow-lg">
+            <h2 className="text-2xl sm:text-3xl font-bold text-yellow-400 text-center mb-8">
+                Modify your User Data
+            </h2>
             {userData && (
                 <Formik
                     initialValues={{
@@ -89,7 +90,7 @@ export default function ModifyUser() {
                 >
                     {({ isSubmitting, errors }) => (
                         <Form
-                            className="flex flex-col gap-4 w-full max-w-lg"
+                            className="flex flex-col gap-6 sm:gap-8 w-full max-w-3xl px-4 sm:px-8 py-6 "
                             onChange={() => {
                                 // Restablecer mensajes al cambiar cualquier dato
                                 setSuccessMessage("");
@@ -98,98 +99,105 @@ export default function ModifyUser() {
                                 }
                             }}
                         >
-                            <div className="flex flex-row items-center w-full">
-                                <label className="text-white w-1/4">Name</label>
+                            {/* Nombre */}
+                            <div className="flex flex-col sm:flex-row items-center w-full">
+                                <label className="text-yellow-400 font-semibold sm:w-1/4 mb-2 sm:mb-0">Name</label>
                                 <Field
                                     type="text"
                                     name="name"
                                     placeholder="Full Name"
-                                    className="w-64 h-10 border-b-2 text-white border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                                    className="w-full sm:w-64 h-12 border-b-2 text-white border-transparent bg-transparent rounded-lg p-3 focus:outline-none focus:border-yellow-400 transition duration-300 ease-in-out"
                                 />
-
                             </div>
                             <ErrorMessage
                                 name="name"
                                 component="div"
                                 className="text-red-500 text-sm mt-1"
                             />
-                            <div className="flex flex-row items-center w-full">
-                                <label className="text-white w-1/4">Last Name</label>
+
+                            {/* Apellido */}
+                            <div className="flex flex-col sm:flex-row items-center w-full">
+                                <label className="text-yellow-400 font-semibold sm:w-1/4 mb-2 sm:mb-0">Last Name</label>
                                 <Field
                                     type="text"
                                     name="lastName"
                                     placeholder="Last Name"
-                                    className="w-64 h-10 border-b-2 text-white border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                                    className="w-full sm:w-64 h-12 border-b-2 text-white border-transparent bg-transparent rounded-lg p-3 focus:outline-none focus:border-yellow-400 transition duration-300 ease-in-out"
                                 />
-
                             </div>
                             <ErrorMessage
                                 name="lastName"
                                 component="div"
                                 className="text-red-500 text-sm mt-1"
                             />
-                            <div className="flex flex-row items-center w-full">
-                                <label className="text-white w-1/4">Date of Birth</label>
+
+                            {/* Fecha de nacimiento */}
+                            <div className="flex flex-col sm:flex-row items-center w-full">
+                                <label className="text-yellow-400 font-semibold sm:w-1/4 mb-2 sm:mb-0">Date of Birth</label>
                                 <Field
                                     type="date"
                                     name="dateOfBirth"
                                     placeholder="Date of Birth"
-                                    className="w-64 h-10 border-b-2 text-white border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                                    className="w-full sm:w-64 h-12 border-b-2 text-white border-transparent bg-transparent rounded-lg p-3 focus:outline-none focus:border-yellow-400 transition duration-300 ease-in-out"
                                 />
-
                             </div>
                             <ErrorMessage
                                 name="dateOfBirth"
                                 component="div"
                                 className="text-red-500 text-sm mt-1"
                             />
-                            <div className="flex flex-row items-center w-full">
-                                <label className="text-white w-1/4">Email</label>
+
+                            {/* Correo electrónico */}
+                            <div className="flex flex-col sm:flex-row items-center w-full">
+                                <label className="text-yellow-400 font-semibold sm:w-1/4 mb-2 sm:mb-0">Email</label>
                                 <Field
                                     type="email"
                                     name="email"
                                     placeholder="Email Address"
-                                    className="w-64 h-10 border-b-2 text-white border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                                    className="w-full sm:w-64 h-12 border-b-2 text-white border-transparent bg-transparent rounded-lg p-3 focus:outline-none focus:border-yellow-400 transition duration-300 ease-in-out"
                                 />
-
                             </div>
                             <ErrorMessage
                                 name="email"
                                 component="div"
                                 className="text-red-500 text-sm mt-1"
                             />
-                            <div className="flex flex-row items-center w-full">
-                                <label className="text-white w-1/4">Password</label>
+
+                            {/* Contraseña */}
+                            <div className="flex flex-col sm:flex-row items-center w-full">
+                                <label className="text-yellow-400 font-semibold sm:w-1/4 mb-2 sm:mb-0">Password</label>
                                 <Field
                                     type="password"
                                     name="password"
                                     placeholder="Password"
-                                    className="w-64 h-10 border-b-2 text-white border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                                    className="w-full sm:w-64 h-12 border-b-2 text-white border-transparent bg-transparent rounded-lg p-3 focus:outline-none focus:border-yellow-400 transition duration-300 ease-in-out"
                                 />
-
                             </div>
                             <ErrorMessage
                                 name="password"
                                 component="div"
                                 className="text-red-500 text-sm mt-1"
                             />
-                            
+
+                            {/* Mensaje de éxito */}
                             {successMessage && (
-                                <div className="mb-4 text-green-700 font-bold text-2xl text-center">
+                                <div className="mb-4 text-green-700 font-bold text-xl sm:text-2xl text-center">
                                     {successMessage}
                                 </div>
                             )}
 
+                            {/* Mensaje de error */}
                             {errors.general && (
-                                <div className="mb-4 text-red-600 text-2xl font-bold text-center">
+                                <div className="mb-4 text-red-600 text-xl sm:text-2xl font-bold text-center">
                                     {errors.general}
                                 </div>
                             )}
 
+                            {/* Botón de envío */}
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="btn w-full"
+                                className="btn"
                             >
                                 {isSubmitting ? "Modifying User" : "Submit"}
                             </button>

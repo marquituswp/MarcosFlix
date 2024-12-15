@@ -49,9 +49,10 @@ export default function ProfileLayout({ children }) {
     }
 
     return (
-        <div className="flex h-screen">
-            <aside className="w-1/4 bg-blue-950 p-6 flex flex-col items-center">
-                <div className="relative w-[100px] h-[100px]">
+        <div className="flex flex-col lg:flex-row h-auto lg:h-screen">
+            {/* Sidebar */}
+            <aside className="w-full lg:w-1/4 bg-blue-950 p-6 flex flex-col items-center mb-6 lg:mb-0">
+                <div className="relative w-[100px] h-[100px] mb-4">
                     <Image
                         src={user.profilePicture || "/default-profile.png"} // Imagen por defecto si no existe
                         alt={`${user.name}'s Profile Picture`}
@@ -59,33 +60,36 @@ export default function ProfileLayout({ children }) {
                         fill // Asegura que la imagen llena el contenedor
                     />
                 </div>
-                <h2 className="text-xl font-semibold text-yellow-400">{user.name}</h2>
-                <p className="text-yellow-200 mb-4">{user.email}</p>
+                <h2 className="text-xl font-semibold text-yellow-400 text-center">{user.name}</h2>
+                <p className="text-yellow-200 mb-4 text-center">{user.email}</p>
 
-                <div className="w-full flex flex-col gap-2">
-
+                <div className="w-full flex flex-col gap-4">
                     {/* Enlaces para editar y eliminar la cuenta */}
                     <Link
                         href="/profile/options/edit"
-                        className={`${pathname === "/profile/options/edit"
-                            ? "btn bg-gray-300 text-black"
-                            : "btn"
-                            }`}
+                        className={`${
+                            pathname === "/profile/options/edit"
+                                ? "btn bg-gray-300 text-black"
+                                : "btn"
+                        }`}
                     >
                         Edit Profile
                     </Link>
                     <Link
                         href="/profile/options/delete"
-                        className={`${pathname === "/profile/options/delete"
-                            ? "btn bg-gray-300 text-black"
-                            : "btn bg-red-500 hover:bg-red-600"
-                            }`}
+                        className={`${
+                            pathname === "/profile/options/delete"
+                                ? "btn bg-gray-300 text-black"
+                                : "btn bg-red-500 hover:bg-red-600"
+                        }`}
                     >
                         Delete Account
                     </Link>
                 </div>
             </aside>
-            <main className="w-3/4 p-2">{children}</main>
+
+            {/* Contenido principal */}
+            <main className="w-full lg:w-3/4 p-2">{children}</main>
         </div>
     );
 }

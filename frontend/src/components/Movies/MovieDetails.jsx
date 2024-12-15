@@ -10,7 +10,6 @@ export default function MovieDetails({ movieId }) {
 
     useEffect(() => {
         try {
-
             fetch(`https://marcosflix.onrender.com/movie/${movieId}`)
                 .then(response => response.ok ? response.json() : response.text())
                 .then(data => {
@@ -31,10 +30,11 @@ export default function MovieDetails({ movieId }) {
     }
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8 bg-gray-900 text-white relative w-[1500px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-6 sm:p-8 bg-gray-900 text-white relative">
 
-            <div className="lg:col-span-1 flex flex-col justify-start items-center">
-                <div className="relative w-full max-w-md mb-20">
+            {/* Imagen de la película */}
+            <div className="flex justify-center items-center">
+                <div className="relative w-full max-w-xs sm:max-w-sm lg:max-w-md mb-8">
                     <Image
                         src={movie.poster}
                         alt={`${movie.title} poster`}
@@ -44,20 +44,16 @@ export default function MovieDetails({ movieId }) {
                         className="rounded-lg shadow-lg"
                     />
                 </div>
-
             </div>
 
-            <div className="lg:col-span-2 space-y-6">
+            {/* Detalles de la película */}
+            <div className="col-span-1 sm:col-span-2 lg:col-span-2 space-y-6">
                 {token && (
-                    <div className="flex items-center">
-                        {/* Título con ancho ajustado al tamaño del texto */}
-                        <h1 className="text-5xl font-bold drop-shadow-lg text-yellow-400 w-2/4">
+                    <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start">
+                        <h1 className="text-3xl sm:text-5xl font-bold drop-shadow-lg text-yellow-400 w-full sm:w-3/4">
                             {movie.title}
                         </h1>
-                        {/* Espaciador para separar el título de los botones */}
-                        <div className="flex-grow"></div>
-                        {/* Contenedor de botones que ocupa el espacio sobrante */}
-                        <div className="flex gap-2 items-end self-start">
+                        <div className="flex gap-2 items-center sm:self-start mt-4 sm:mt-0">
                             <Link href={`/movie/${movie._id}/leaveReview`} className="btn">
                                 Leave a review
                             </Link>
@@ -68,37 +64,28 @@ export default function MovieDetails({ movieId }) {
                     </div>
                 )}
 
-
                 <div>
                     <h3 className="text-2xl font-semibold">Actors</h3>
-                    {movie.actors.map((actor, index) => {
-                        return <span key={index} className="text-lg text-gray-300">{actor} </span>
-                    })}
-
+                    <p className="text-lg text-gray-300">{movie.actors.join(", ")}</p>
                 </div>
 
                 <div>
                     <h3 className="text-2xl font-semibold">Genre</h3>
-                    {movie.filmGenre.map((genre, index) => {
-                        return <span key={index} className="text-lg text-gray-300">{genre}, </span>
-                    })}
+                    <p className="text-lg text-gray-300">{movie.filmGenre.join(", ")}</p>
                 </div>
 
                 <div>
                     <h3 className="text-2xl font-semibold">Platforms</h3>
-                    {movie.platforms.map((platform, index) => {
-                        return <span key={index} className="text-lg text-gray-300">{platform}, </span>
-                    })}
+                    <p className="text-lg text-gray-300">{movie.platforms.join(", ")}</p>
                 </div>
 
                 <div>
-                    <h3 className="text-2xl font-semibold">Date</h3>
-                    <p className="text-lg text-gray-300">{new
-                        Date(movie.date).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                        })}</p>
+                    <h3 className="text-2xl font-semibold">Release Date</h3>
+                    <p className="text-lg text-gray-300">{new Date(movie.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                    })}</p>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -108,14 +95,12 @@ export default function MovieDetails({ movieId }) {
                     </div>
                 </div>
 
+                {/* Reseñas de la película */}
                 <div className="space-y-6 h-80 overflow-y-auto p-4 bg-gray-800 rounded-lg shadow-lg">
                     <h2 className="text-3xl font-semibold text-yellow-400">Reviews</h2>
                     <ul className="space-y-4">
                         {movie.reviews.map((review, index) => (
-                            <li
-                                key={index}
-                                className="p-6 flex gap-6"
-                            >
+                            <li key={index} className="p-4 sm:p-6 flex gap-6">
                                 <h3 className="text-lg font-bold text-white">{review.review}</h3>
                                 <div className="text-lg text-gray-500 flex items-center">
                                     <HandlePoints points={review.scoring} />
@@ -124,7 +109,6 @@ export default function MovieDetails({ movieId }) {
                         ))}
                     </ul>
                 </div>
-
             </div>
         </div>
     );

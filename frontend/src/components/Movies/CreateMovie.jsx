@@ -8,6 +8,7 @@ import { useState } from "react";
 import handleUploadMoviePoster from "@/lib/handleUploadMoviePoster";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+
 const CreateMovieSchema = Yup.object().shape({
     title: Yup.string().required("Title is required").min(3, "Title too short"),
     filmGenre: Yup.array()
@@ -16,8 +17,7 @@ const CreateMovieSchema = Yup.object().shape({
     actors: Yup.string()
         .required("Actors are required")
         .matches(/^[a-zA-Z0-9 ,]+$/, "Invalid characters"),
-    date: Yup.date()
-        .required("date is required"),
+    date: Yup.date().required("date is required"),
     platforms: Yup.array()
         .min(1, "At least one platform is required")
         .required("Platform is required"),
@@ -34,11 +34,11 @@ export default function CreateMovie() {
     ]);
     const [platformList] = useState([
         "Netflix", "Amazon Prime Video", "Disney Plus", "MAX", "Apple TV", "Movistar +", "Crunchyroll", "Tio Anime"
-    ])
-    const [imageFile, setImageFile] = useState(null); // Almacena el archivo seleccionado
-    const [successMessage, setSuccessMessage] = useState(""); // Estado para el mensaje de éxito
-    const { token } = useAuth()
-    const router = useRouter()
+    ]);
+    const [imageFile, setImageFile] = useState(null); 
+    const [successMessage, setSuccessMessage] = useState(""); 
+    const { token } = useAuth();
+    const router = useRouter();
 
     const handleSubmit = async (values, { setSubmitting, resetForm, setErrors }) => {
         try {
@@ -47,7 +47,7 @@ export default function CreateMovie() {
                 date: values.date,
                 platforms: values.platforms,
                 actors: values.actors.split(",").map((actor) => actor.trim()),
-                filmGenre: values.filmGenre
+                filmGenre: values.filmGenre,
             };
             const response = await fetch("https://marcosflix.onrender.com/movie", {
                 method: "POST",
@@ -60,15 +60,14 @@ export default function CreateMovie() {
 
             if (response.ok) {
                 const data = await response.json();
-                setSuccessMessage("MOVIE CREATED")
-                handleUploadMoviePoster(imageFile, token, data._id)
+                setSuccessMessage("MOVIE CREATED");
+                handleUploadMoviePoster(imageFile, token, data._id);
                 setTimeout(() => {
-                    handleAutoReview(values.scoring, token, data._id)
+                    handleAutoReview(values.scoring, token, data._id);
                     resetForm();
                     setPreviewImage(null);
-                    router.push("/")
+                    router.push("/");
                 }, 5000);
-
             } else {
                 setSuccessMessage("");
                 const errorText = await response.text();
@@ -85,16 +84,15 @@ export default function CreateMovie() {
     const handleFileChange = (event, setFieldValue) => {
         const file = event.target.files[0];
         if (file) {
-            setImageFile(file); // Almacena el archivo en el estado
-            setFieldValue("poster", file); // Pasa el archivo al formulario
+            setImageFile(file); 
+            setFieldValue("poster", file); 
         }
     };
 
-
     return (
-        <div className="flex justify-center items-center min-h-screen text-white">
-            <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full h-full">
-                <h1 className="text-3xl font-bold mb-6 text-yellow-400">Create a Movie</h1>
+        <div className="flex justify-center items-center min-h-screen bg-gray-800 text-white">
+            <div className="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-3xl">
+                <h1 className="text-3xl font-bold mb-6 text-yellow-400 text-center">Create a Movie</h1>
                 <Formik
                     initialValues={{
                         title: "",
@@ -109,9 +107,10 @@ export default function CreateMovie() {
                     onSubmit={handleSubmit}
                 >
                     {({ setFieldValue, values, isSubmitting, errors }) => (
-                        <Form className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8 bg-gray-900 h-full text-white">
-                            <div className="lg:col-span-1 flex flex-col justify-start items-center">
-                                <label htmlFor="poster" className="block font-semibold">
+                        <Form className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                            {/* Imagen de la película */}
+                            <div className="flex flex-col justify-center items-center sm:col-span-1">
+                                <label htmlFor="poster" className="block font-semibold mb-2">
                                     Poster
                                 </label>
                                 <input
@@ -127,7 +126,7 @@ export default function CreateMovie() {
                                     }}
                                 />
                                 {previewImage && (
-                                    <div className="relative w-full  mb-20">
+                                    <div className="relative w-full mb-6">
                                         <Image
                                             src={previewImage}
                                             alt={`${values.title} poster`}
@@ -137,52 +136,40 @@ export default function CreateMovie() {
                                             className="rounded-lg shadow-lg"
                                         />
                                     </div>
-
-
                                 )}
-                                <ErrorMessage
-                                    name="poster"
-                                    component="div"
-                                    className="text-red-500 text-sm"
-                                />
+                                <ErrorMessage name="poster" component="div" className="text-red-500 text-sm" />
                             </div>
-                            <div className="lg:col-span-2 space-y-6">
+
+                            {/* Detalles de la película */}
+                            <div className="sm:col-span-1 lg:col-span-2 space-y-6">
                                 <div>
                                     <Field
                                         name="title"
                                         type="text"
-                                        className="border-b-2 text-5xl font-bold drop-shadow-lg text-yellow-400 border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                                        className="border-b-2 text-3xl font-bold text-yellow-400 bg-transparent border-transparent p-2 focus:outline-none focus:border-blue-500 w-full"
                                         placeholder="Movie title"
                                     />
-                                    <ErrorMessage
-                                        name="title"
-                                        component="div"
-                                        className="text-red-500 text-sm"
-                                    />
+                                    <ErrorMessage name="title" component="div" className="text-red-500 text-sm" />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="actors" className="block text-2xl font-semibold">
+                                    <label htmlFor="actors" className="block text-xl font-semibold">
                                         Actors (comma-separated)
                                     </label>
                                     <Field
                                         name="actors"
                                         type="text"
-                                        className="border-b-2 font-semibold drop-shadow-lg text-lg text-gray-300 border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                                        className="border-b-2 font-semibold text-lg text-gray-300 bg-transparent border-transparent p-2 focus:outline-none focus:border-blue-500 w-full"
                                         placeholder="Actor1, Actor2, Actor3"
                                     />
-                                    <ErrorMessage
-                                        name="actors"
-                                        component="div"
-                                        className="text-red-500 text-sm"
-                                    />
+                                    <ErrorMessage name="actors" component="div" className="text-red-500 text-sm" />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="filmGenre" className="block text-2xl font-semibold mb-4">
+                                    <label htmlFor="filmGenre" className="block text-xl font-semibold mb-2">
                                         Genre
                                     </label>
-                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                                         {genreList.map((genre) => (
                                             <label
                                                 key={genre}
@@ -198,18 +185,14 @@ export default function CreateMovie() {
                                             </label>
                                         ))}
                                     </div>
-                                    <ErrorMessage
-                                        name="filmGenre"
-                                        component="div"
-                                        className="text-red-500 text-sm mt-2"
-                                    />
+                                    <ErrorMessage name="filmGenre" component="div" className="text-red-500 text-sm mt-2" />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="platforms" className="block text-2xl font-semibold mb-4">
+                                    <label htmlFor="platforms" className="block text-xl font-semibold mb-2">
                                         Platforms
                                     </label>
-                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                                         {platformList.map((platform) => (
                                             <label
                                                 key={platform}
@@ -225,47 +208,34 @@ export default function CreateMovie() {
                                             </label>
                                         ))}
                                     </div>
-                                    <ErrorMessage
-                                        name="platforms"
-                                        component="div"
-                                        className="text-red-500 text-sm mt-2"
-                                    />
+                                    <ErrorMessage name="platforms" component="div" className="text-red-500 text-sm mt-2" />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="date" className="block text-2xl font-semibold">
-                                        Date
+                                    <label htmlFor="date" className="block text-xl font-semibold">
+                                        Release Date
                                     </label>
                                     <Field
                                         name="date"
                                         type="date"
-                                        className="border-b-2 font-semibold drop-shadow-lg text-lg text-gray-300 border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
-                                        placeholder="Actor1, Actor2, Actor3"
+                                        className="border-b-2 font-semibold text-lg text-gray-300 bg-transparent border-transparent p-2 focus:outline-none focus:border-blue-500 w-full"
                                     />
-                                    <ErrorMessage
-                                        name="date"
-                                        component="div"
-                                        className="text-red-500 text-sm"
-                                    />
+                                    <ErrorMessage name="date" component="div" className="text-red-500 text-sm" />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="scoring" className="block text-2xl font-semibold">
+                                    <label htmlFor="scoring" className="block text-xl font-semibold">
                                         Rating
                                     </label>
                                     <StarRating
                                         value={values.scoring}
                                         onChange={(value) => setFieldValue("scoring", value)}
                                     />
-                                    <ErrorMessage
-                                        name="scoring"
-                                        component="div"
-                                        className="text-red-500 text-sm"
-                                    />
+                                    <ErrorMessage name="scoring" component="div" className="text-red-500 text-sm" />
                                 </div>
 
                                 {successMessage && (
-                                    <div className="mb-4 text-green-700 font-bold text-2xl text-center">
+                                    <div className="mb-4 text-green-700 font-bold text-xl text-center">
                                         {successMessage}
                                     </div>
                                 )}

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import handleAdaptMovie from "@/lib/handleAdaptMovie";
 import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
@@ -98,34 +98,32 @@ export default function MovieListExternalApi() {
 
     const [addedMovies, setAddedMovies] = useState([]);
 
-    const fetchMovies = async (values) => {
-
+    const fetchMovies = useCallback(async (values) => {
         try {
             const filters = {
                 sort_by: values ? values.sort_by : "popularity.desc",
                 with_genres: values ? values.with_genres : "",
                 vote_average: values ? (values.vote_average * 10) / 5 : 0,
-                page: values ? values.page : 1
+                page: values ? values.page : 1,
             };
-            const url = filters.with_genres ? `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${filters.page}&sort_by=${filters.sort_by}&vote_average.gte=${filters.vote_average}&with_genres=${filters.with_genres}`
-                :
-                `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${filters.page}&sort_by=${filters.sort_by}&vote_average.gte=${filters.vote_average}`
 
-            fetch(url, options)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.results) {
-                        setMessageError("");
-                        setMovies(data.results);
-                    } else {
-                        setMessageError("NO MOVIES");
-                    }
-                })
-                .catch(() => setMessageError("ERROR FETCHING DATA"));
+            const url = filters.with_genres
+                ? `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${filters.page}&sort_by=${filters.sort_by}&vote_average.gte=${filters.vote_average}&with_genres=${filters.with_genres}`
+                : `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${filters.page}&sort_by=${filters.sort_by}&vote_average.gte=${filters.vote_average}`;
+
+            const response = await fetch(url, options);
+            const data = await response.json();
+
+            if (data.results) {
+                setMessageError("");
+                setMovies(data.results);
+            } else {
+                setMessageError("NO MOVIES");
+            }
         } catch (error) {
             setMessageError("ERROR FETCHING DATA");
         }
-    }
+    }, [options]);
 
     useEffect(() => {
         fetchMovies();
@@ -134,7 +132,7 @@ export default function MovieListExternalApi() {
     return (
         <>
 
-            <div className="flex flex-col items-center justify-center my-8 ">
+            <div className="flex flex-col items-center justify-center my-6 w-full bg-blue-950">
                 <Formik
                     initialValues={{
                         sort_by: "popularity.desc",
@@ -152,18 +150,18 @@ export default function MovieListExternalApi() {
                             <Form
                                 onSubmit={handleSubmit}
                                 onChange={handleSubmit}
-                                className="flex flex-wrap items-center justify-center gap-4 relative"
+                                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-1/2 max-w-6xl"
                             >
                                 <div className="flex flex-col items-center">
-                                    <label className="text-white">Genre</label>
+                                    <label className="text-yellow-400 font-semibold text-sm">Genre</label>
                                     <Field
                                         as="select"
                                         name="with_genres"
-                                        className="w-40 h-10 border-b-2 text-white border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                                        className="w-full sm:w-40 p-2 rounded-md border border-gray-700 bg-gray-900 text-white text-sm focus:ring-2 focus:ring-yellow-400"
                                     >
-                                        <option className="text-black" value="">All Genres</option>
+                                        <option value="">All Genres</option>
                                         {genreList.map((genre) => (
-                                            <option key={genre.id} value={genre.id} className="text-black">
+                                            <option key={genre.id} value={genre.id}>
                                                 {genre.name}
                                             </option>
                                         ))}
@@ -171,7 +169,19 @@ export default function MovieListExternalApi() {
                                 </div>
 
                                 <div className="flex flex-col items-center">
-                                    <label className="text-white">Min Scoring</label>
+                                    <label className="text-yellow-400 font-semibold text-sm">Popularity</label>
+                                    <Field
+                                        as="select"
+                                        name="sort_by"
+                                        className="w-full sm:w-40 p-2 rounded-md border border-gray-700 bg-gray-900 text-white text-sm focus:ring-2 focus:ring-yellow-400"
+                                    >
+                                        <option value="popularity.desc">Descendent</option>
+                                        <option value="popularity.asc">Ascendent</option>
+                                    </Field>
+                                </div>
+
+                                <div className="flex flex-col items-center">
+                                    <label className="text-yellow-400 font-semibold text-sm">Min Scoring</label>
                                     <StarRating
                                         value={values.vote_average}
                                         onChange={(value) => {
@@ -181,38 +191,28 @@ export default function MovieListExternalApi() {
                                     />
                                 </div>
 
-                                <div className="flex flex-col items-center">
-                                    <label className="text-white">Popularity</label>
-                                    <Field
-                                        as="select"
-                                        name="sort_by"
-                                        className="w-40 h-10 border-b-2 text-white border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
-                                    >
-                                        <option className="text-black" value="popularity.desc">Descendent</option>
-                                        <option className="text-black" value="popularity.asc">Ascendent</option>
-                                    </Field>
-                                </div>
-
                                 {/* Campo oculto para la página */}
                                 <Field type="hidden" name="page" />
 
                                 {/* Botón para borrar los filtros */}
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setFieldValue("page", 1); // Reinicia la página al limpiar filtros
-                                        resetForm(); // Resetea los valores del formulario
-                                        fetchMovies(); // Llama a fetchMovies sin filtros
-                                    }}
-                                    className="btn bg-red-500 text-white rounded-lg p-2"
-                                >
-                                    Clear Filters
-                                </button>
+                                <div className="flex gap-2 col-span-full justify-center">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setFieldValue("page", 1); // Reinicia la página al limpiar filtros
+                                            resetForm(); // Resetea los valores del formulario
+                                            fetchMovies(); // Llama a fetchMovies sin filtros
+                                        }}
+                                        className="btn bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded-md"
+                                    >
+                                        Clear Filters
+                                    </button>
+                                </div>
                             </Form>
 
                             <div className="my-16 mx-4 sm:mx-10 lg:mx-40">
                                 {movies && (
-                                    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                                    <ul className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-6">
                                         {movies.map((movie) => {
                                             const addedMovie = addedMovies.find((entry) => entry.movieId === movie.id); // Encuentra si la película ya fue añadida
 
@@ -233,12 +233,12 @@ export default function MovieListExternalApi() {
                                                                 className="rounded-md object-cover"
                                                             />
                                                         </div>
-                                                        <h2 className="mt-4 text-center text-2xl font-bold text-yellow-400">
+                                                        <h2 className="mt-4 text-center lg:text-2xl md:text-lg sm:text-m font-bold text-yellow-400">
                                                             {movie.original_title}
                                                         </h2>
                                                     </div>
                                                     <button
-                                                        className="btn"
+                                                        className="btn mt-2"
                                                         onClick={async () => {
                                                             const result = await handleAdaptMovie(movie, token); // Esperamos que la promesa se resuelva
 
@@ -266,8 +266,8 @@ export default function MovieListExternalApi() {
                                                         {addedMovie && (
                                                             <span
                                                                 className={`${addedMovie.message === "MOVIE ADDED"
-                                                                        ? "text-green-700 font-bold"
-                                                                        : "text-red-600 font-semibold"
+                                                                    ? "text-green-700 font-bold"
+                                                                    : "text-red-600 font-semibold"
                                                                     }`}
                                                             >
                                                                 {addedMovie.message}

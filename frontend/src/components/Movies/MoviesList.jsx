@@ -8,8 +8,8 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function MoviesList() {
     const [movies, setMovies] = useState(null);
-    const [favoriteChanged,setFavoriteChanged] = useState(false)
-    const { token } = useAuth()
+    const [favoriteChanged, setFavoriteChanged] = useState(false);
+    const { token } = useAuth();
     const [genreList] = useState([
         "Action", "Adventure", "Comedy", "Drama", "Horror", "Thriller",
         "Romance", "Science Fiction", "Fantasy", "Documentary", "Animation",
@@ -18,16 +18,15 @@ export default function MoviesList() {
     ]);
     const [platformList] = useState([
         "Netflix", "Amazon Prime Video", "Disney Plus", "MAX", "Apple TV", "Movistar +", "Crunchyroll", "Tio Anime"
-    ])
-    const [isOrderedByScoring, setIsOrderedByScoring] = useState(false); // Estado para el orden
-    const [messageError, setMessageError] = useState("")
+    ]);
+    const [isOrderedByScoring, setIsOrderedByScoring] = useState(false);
+    const [messageError, setMessageError] = useState("");
 
     const fetchMovies = async (filters = {}) => {
         try {
             const validFilters = Object.fromEntries(
                 Object.entries(filters).filter(([_, value]) => value !== "" && value !== null)
             );
-            // Construye la URL con los filtros como parámetros de consulta
             const queryParams = new URLSearchParams(validFilters).toString();
 
             fetch(`https://marcosflix.onrender.com/movie?${queryParams}`, {
@@ -39,19 +38,18 @@ export default function MoviesList() {
                 .then(response => response.ok ? response.json() : response.text())
                 .then(data => {
                     if (typeof data === "string") {
-                        setMessageError("NO MOVIES")
-                        setMovies(null)
+                        setMessageError("NO MOVIES");
+                        setMovies(null);
                     } else {
-                        setMessageError("")
-                        setMovies(data)
+                        setMessageError("");
+                        setMovies(data);
                     }
                 })
-                .catch(() => setMessageError("ERROR FETCHING DATA"))
+                .catch(() => setMessageError("ERROR FETCHING DATA"));
         } catch {
-            setMessageError("ERROR FETCHING DATA")
+            setMessageError("ERROR FETCHING DATA");
         }
     };
-
 
     useEffect(() => {
         fetchMovies();
@@ -67,28 +65,27 @@ export default function MoviesList() {
                 },
             })
                 .then(response => response.ok ? response.json() : response.text())
-                .then(data => {
-                    setFavoriteChanged(!favoriteChanged)
+                .then(() => {
+                    setFavoriteChanged(!favoriteChanged);
                 })
-                .catch((error) => console.log(error))
+                .catch(error => console.log(error));
         } catch {
-            console.log("ERROR SETTING FAVORITE")
+            console.log("ERROR SETTING FAVORITE");
         }
-    }
+    };
 
     return (
         <>
-            <div className="flex flex-col items-center justify-center my-6 ">
+            <div className="flex flex-col items-center justify-center my-6 w-full bg-blue-950">
                 <Formik
                     initialValues={{
                         title: "",
                         date: "",
                         genre: "",
-                        platforms:"",
+                        platforms: "",
                         minScoring: "",
                     }}
                     onSubmit={(values) => {
-                        // Llama al backend con los filtros aplicados
                         const filters = {
                             title: values.title,
                             date: values.date,
@@ -100,117 +97,108 @@ export default function MoviesList() {
                         fetchMovies(filters);
                     }}
                 >
-                    {({ handleSubmit,values, resetForm, setFieldValue }) => (
+                    {({ handleSubmit, values, resetForm, setFieldValue }) => (
                         <Form
                             onSubmit={handleSubmit}
                             onChange={handleSubmit}
-                            className="flex flex-wrap items-center justify-center gap-4 relative"
+                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 w-1/2 max-w-6xl"
                         >
                             <div className="flex flex-col items-center">
-                                <label className="text-white">Title</label>
+                                <label className="text-yellow-400 font-semibold text-sm">Title</label>
                                 <Field
                                     type="text"
                                     name="title"
                                     placeholder="Search title"
-                                    className="w-40 h-10 border-b-2 text-white border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                                    className="w-full sm:w-40 p-2 rounded-md border border-gray-700 bg-gray-900 text-white text-sm focus:ring-2 focus:ring-yellow-400"
                                 />
                             </div>
                             <div className="flex flex-col items-center">
-                                <label className="text-white">Date</label>
+                                <label className="text-yellow-400 font-semibold text-sm">Date</label>
                                 <Field
                                     type="date"
                                     name="date"
-                                    placeholder="Release date"
-                                    className="w-40 h-10 border-b-2 text-white border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                                    className="w-full sm:w-40 p-2 rounded-md border border-gray-700 bg-gray-900 text-white text-sm focus:ring-2 focus:ring-yellow-400"
                                 />
                             </div>
                             <div className="flex flex-col items-center">
-                                <label className="text-white">Genre</label>
+                                <label className="text-yellow-400 font-semibold text-sm">Genre</label>
                                 <Field
                                     as="select"
                                     name="genre"
-                                    className="w-40 h-10 border-b-2 text-white border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                                    className="w-full sm:w-40 p-2 rounded-md border border-gray-700 bg-gray-900 text-white text-sm focus:ring-2 focus:ring-yellow-400"
                                 >
-                                    <option className="text-black" value="">All Genres</option>
+                                    <option value="">All Genres</option>
                                     {genreList.map((genre) => (
-                                        <option key={genre} value={genre} className="text-black">
-                                            {genre}
-                                        </option>
+                                        <option key={genre} value={genre}>{genre}</option>
                                     ))}
                                 </Field>
                             </div>
                             <div className="flex flex-col items-center">
-                                <label className="text-white">Platform</label>
+                                <label className="text-yellow-400 font-semibold text-sm">Platform</label>
                                 <Field
                                     as="select"
                                     name="platforms"
-                                    className="w-40 h-10 border-b-2 text-white border-transparent bg-transparent rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                                    className="w-full sm:w-40 p-2 rounded-md border border-gray-700 bg-gray-900 text-white text-sm focus:ring-2 focus:ring-yellow-400"
                                 >
-                                    <option className="text-black" value="">All platforms</option>
+                                    <option value="">All Platforms</option>
                                     {platformList.map((platform) => (
-                                        <option key={platform} value={platform} className="text-black">
-                                            {platform}
-                                        </option>
+                                        <option key={platform} value={platform}>{platform}</option>
                                     ))}
                                 </Field>
                             </div>
                             <div className="flex flex-col items-center">
-                                <label className="text-white">Min Scoring</label>
+                                <label className="text-yellow-400 font-semibold text-sm">Min Scoring</label>
                                 <StarRating
-                                        value={values.minScoring}
-                                        onChange={(value) => {
-                                            setFieldValue("minScoring", value)
-                                            handleSubmit()
-                                        }}
-                                    />
+                                    value={values.minScoring}
+                                    onChange={(value) => {
+                                        setFieldValue("minScoring", value);
+                                        handleSubmit();
+                                    }}
+                                />
                             </div>
-
-                            <button
-                                type="submit"
-                                onClick={() => {
-                                    setIsOrderedByScoring(true)
-                                    handleSubmit()
-                                }}
-                                disabled={isOrderedByScoring}
-                                className={`btn rounded-lg p-2 disabled:bg-gray-500`}
-                            >
-                                Order by Scoring
-                            </button>
-
-                            <button
-                                type="submit"
-                                onClick={() => {
-                                    setIsOrderedByScoring(false)
-                                    handleSubmit()
-                                }}
-                                disabled={!isOrderedByScoring}
-                                className={`btn rounded-lg p-2 disabled:bg-gray-500`}
-                            >
-                                Order by Most Recent
-                            </button>
-
-
-
-                            {/* Botón para borrar los filtros */}
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    resetForm(); // Resetea los valores del formulario
-                                    setIsOrderedByScoring(false); // Resetea el estado del orden
-                                    fetchMovies(); // Llama a fetchMovies sin filtros
-                                }}
-                                className="btn bg-red-500 text-white rounded-lg p-2"
-                            >
-                                Clear Filters
-                            </button>
+                            <div className="flex gap-2 col-span-full justify-center">
+                                <button
+                                    type="submit"
+                                    onClick={() => {
+                                        setIsOrderedByScoring(true)
+                                        handleSubmit()
+                                    }}
+                                    disabled={isOrderedByScoring}
+                                    className={"btn rounded-lg p-2 disabled:bg-gray-500"}
+                                >
+                                    Order by Scoring
+                                </button>
+                                <button
+                                    type="submit"
+                                    onClick={() => {
+                                        setIsOrderedByScoring(false)
+                                        handleSubmit()
+                                    }}
+                                    disabled={!isOrderedByScoring}
+                                    className={"btn rounded-lg p-2 disabled:bg-gray-500"}
+                                >
+                                    Order by Most Recent
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        resetForm();
+                                        setIsOrderedByScoring(false);
+                                        fetchMovies();
+                                    }}
+                                    className="btn bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded-md"
+                                >
+                                    Clear Filters
+                                </button>
+                            </div>
                         </Form>
                     )}
                 </Formik>
             </div>
 
-            <div className="my-16 mx-4 sm:mx-10 lg:mx-40 ">
+            <div className="my-16 mx-4 sm:mx-10 lg:mx-40">
                 {movies && (
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <ul className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-6">
                         {movies.map((movie, index) => (
                             <li
                                 key={index}
@@ -229,12 +217,12 @@ export default function MoviesList() {
                                             className="rounded-md"
                                         />
                                     </div>
-                                    <h2 className="mt-4 text-center text-2xl font-bold text-yellow-400">
+                                    <h2 className="mt-4 text-center lg:text-2xl md:text-lg sm:text-m font-bold text-yellow-400 w-5/6">
                                         {movie.title}
                                     </h2>
                                 </Link>
                                 {token && <button
-                                    className="mt-4 w-10 h-10 flex items-center justify-center rounded-full  shadow-md shadow-blue-500 ease-in duration-100 active:translate-y-1 absolute bottom-4 right-4"
+                                    className="mt-4 w-10 h-10 flex items-center justify-center rounded-full shadow-md shadow-blue-500 ease-in duration-100 active:translate-y-1 absolute bottom-4 right-4"
                                     onClick={() => handleAddToFavorites(movie._id, movie.isFavorite)}
                                 >
                                     <svg
@@ -259,7 +247,6 @@ export default function MoviesList() {
                 {messageError && <div className="flex justify-center">
                     <h2 className="text-3xl text-yellow-400 font-bold">{messageError}</h2>
                 </div>
-
                 }
             </div>
         </>
