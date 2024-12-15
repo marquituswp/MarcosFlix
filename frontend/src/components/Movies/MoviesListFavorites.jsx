@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import StarRating from "../StarRating";
 import Link from "next/link";
@@ -22,7 +22,7 @@ export default function MoviesList() {
     const [isOrderedByScoring, setIsOrderedByScoring] = useState(false); // Estado para el orden
     const [messageError, setMessageError] = useState("")
 
-    const fetchMovies = async (filters = {}) => {
+    const fetchMovies = useCallback(async (filters = {}) => {
         try {
             const validFilters = Object.fromEntries(
                 Object.entries(filters).filter(([_, value]) => value !== "" && value !== null)
@@ -51,7 +51,7 @@ export default function MoviesList() {
         } catch {
             setMessageError("ERROR FETCHING DATA")
         }
-    };
+    }, []);
 
 
     useEffect(() => {
