@@ -39,8 +39,8 @@ Sigue estos pasos para ejecutar la aplicación localmente.
 ### 1. Clona el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/movie-database-app.git
-cd movie-database-app
+git clone https://github.com/marquituswp/MarcosFlix.git
+cd MarcosFlix
 ```
 
 ## 2. Instalación de dependencias
