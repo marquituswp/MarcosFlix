@@ -18,7 +18,8 @@ Esta aplicación está dividida en dos partes:
 ### 📸 Imagen de la App
 Aquí puedes añadir una captura de pantalla o un mockup de tu aplicación para dar a los usuarios una vista previa de la interfaz.
 
-![Imagen de la App](images\AppLayout.JPG)
+![Imagen De La APP](https://github.com/user-attachments/assets/ed4a7c7c-0028-4b8a-86d7-a5178ad6d25c)
+
 
 ---
 
