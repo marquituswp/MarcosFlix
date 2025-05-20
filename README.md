@@ -16,7 +16,6 @@ Esta aplicación está dividida en dos partes:
 - **Conexión con TMDB**: Ver y añadir películas desde la API externa de TMDB.
 
 ### 📸 Imagen de la App
-Aquí puedes añadir una captura de pantalla o un mockup de tu aplicación para dar a los usuarios una vista previa de la interfaz.
 
 ![Imagen De La APP](https://github.com/user-attachments/assets/ed4a7c7c-0028-4b8a-86d7-a5178ad6d25c)
 
@@ -162,6 +161,10 @@ Main features include:
 - **Create Movies**: Add your own movies with details and a poster.
 - **Reviews**: Create and manage movie reviews.
 - **TMDB Section**: Connect to an external API (TMDB) to view and add movies from their database.
+
+### 📸 Imagen de la App
+
+![Imagen De La APP](https://github.com/user-attachments/assets/ed4a7c7c-0028-4b8a-86d7-a5178ad6d25c)
 
 ## Technologies Used
 
